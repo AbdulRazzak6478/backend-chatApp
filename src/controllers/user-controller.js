@@ -11,7 +11,7 @@ async function signup(req, res){
         return res.status(StatusCodes.CREATED).json(SuccessResponse);
     } catch (error) {
         console.log('user controller signup user error : ',error);
-        ErrorResponse.data = error;
+        ErrorResponse.error = error;
         return res.status(error?.statusCode ? error.statusCode :StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
     }
 }
@@ -28,7 +28,7 @@ async function signIn(req, res){
         return res.status(StatusCodes.OK).json(SuccessResponse);
     } catch (error) {
         console.log('user controller signin user error : ',error);
-        ErrorResponse.data = error;
+        ErrorResponse.error = error;
         return res.status(error?.statusCode ? error.statusCode :StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
     }
 }

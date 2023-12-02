@@ -10,6 +10,20 @@ const userRepository = new UserRepository();
 async function signup(data)
 {
     try {
+
+        const isUser = await userRepository.getUserByEmail(data.email);
+
+        console.log('user before signup : ',isUser)
+        if(isUser.length != 0)
+        {
+            console.log('User is already exist ');
+            // throw new AppError(`user is already present `,StatusCodes.BAD_REQUEST)
+            return { exist:true,message : `User with ${data.email} is already exist `}
+        }
+        // return isUser;
+        // console.log('lets end it');
+        // return isUser;
+          
         const user = await userRepository.create(data);
         console.log('user created :',user);
         return user;
