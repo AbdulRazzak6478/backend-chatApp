@@ -21,9 +21,9 @@ async function signup(data)
             return { exist:true,message : `User with ${data.email} is already exist `}
         }
         // return isUser;
-        // console.log('lets end it');
+        // console.log('lets end it')
         // return isUser;
-          
+           
         const user = await userRepository.create(data);
         console.log('user created :',user);
         return user;
@@ -50,12 +50,18 @@ async function signIn(data)
         {
             throw new AppError(`incorrect password `,StatusCodes.BAD_REQUEST)
         }
+        const userData = {
+            id : user[0].id,
+            email : user[0].email,
+            name : user[0].name
+        }
+        console.log('user payload ',userData);
         const input = {
             id : user[0].id,
             email : user[0].email
         }
         const token = Auth.createToken(input);
-        return {user,token};
+        return {userData,token};
         // return user;
     } catch (error) {
         console.log('user service signup user error :',error);
