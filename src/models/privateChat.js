@@ -15,7 +15,7 @@ const privateChatSchema = new mongoose.Schema({
         {
             type:mongoose.Schema.Types.ObjectId,
         }
-    ],
+    ], 
 });
 
 const PrivateChat = mongoose.model('PrivateChat',privateChatSchema);

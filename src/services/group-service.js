@@ -23,7 +23,7 @@ async function createGroup (data){
         // await user.save();
         // userDetails.replies.pull(tweet.id);
         // userDetails.save();
-        // await user.save();
+        // await user.save()
 
         // add group id into all members profile
         group.users.map(async(id,index)=>{
