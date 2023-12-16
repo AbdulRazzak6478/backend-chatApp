@@ -48,6 +48,7 @@ async function signIn(data)
         // compare password
         if(!Auth.checkPassword(data.password,encryptedPassword))
         {
+            console.log('incorrect password from signin service');
             throw new AppError(`incorrect password `,StatusCodes.BAD_REQUEST)
         }
         const userData = {

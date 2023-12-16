@@ -8,25 +8,69 @@ const cors = require('cors');
 const { DB, ServerConfig } = require('./config');
 const apiRoutes = require('./routes');
 
+const users=[{}];
+
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({origin:true}));
 app.use('/',apiRoutes);
+app.use(cors()); 
 
-// io.on('connection', (socket) => {
-//     console.log('a user connected',socket.id);
+io.on('connection', (socket) => {
+    console.log('a user connected',socket.id);
 
-//     socket.on('doctor',(arg)=>{
-//       console.log('event recieve from client ',arg);
-//     })
-//     socket.emit('hello','world');
-  
-//     socket.on('disconnect',()=>{
-//       console.log('user Disconnected ',socket.id);
-//     })
-//   });app.get('/',(req,res)=>{
-//     res.send('Hello world')
-//   })
+ 
+
+    socket.on('joined',({chatUserId})=>{
+      // users[socket.id]=chatUserId;
+      // console.log('users array : ',users);
+      console.log(chatUserId,' has joined');
+      socket.join(chatUserId);
+      socket.broadcast.emit('userJoined',{user:chatUserId,message:`${chatUserId} has joined`});
+    })
+    socket.emit('welcome',{user:'Admin',message : 'welcome to the chat'});
+
+    socket.on('user-message',(data)=>{
+      console.log('chat message object from client : ',data);
+      socket.join(data.chatUserId);
+      io.to(data.chatUserId).emit('message-received',{...data});
+      // socket.emit('message-received',data);
+    })
+    socket.on('client',(msg)=>{
+      console.log('Client : ',msg,' is connected')
+    });
+
+    socket.on('disconnect',()=>{
+      console.log('user Disconnected ',socket.id);
+    });
+    // socket.emit('welcome',{user:'Admin',message:'Welcome to Chat'});
+  //   socket.on('joined',(user)=>{
+  //     users[socket.id] = user;
+  //     console.log(`${user} have joined`,users[socket.id]);
+  //     console.log('users socket id array : ',users)
+  //     socket.emit('welcome',{user,message : 'welcome to the chat'});
+  //     // socket.broadcast.emit('user joined',{user,message:'user has joined'});
+  //   })
+  //   socket.on('join_room',(data)=>{
+  //   console.log('joining room ',data.groupid);
+  //   socket.join(data.groupid);
+  // });
+  // socket.on('hello',(args)=>{
+  //   console.log('emit : hello ,',args);
+  // })
+  //   socket.on('chat',(args)=>{
+  //     console.log('chat data from client : ',args);
+  //     socket.join(args.groupid);
+  //     io.to(args.groupid).emit('msg_rcvd',{...args});
+  //   })
+ 
+  //   socket.on('disconnect',()=>{
+  //     console.log('user Disconnected ',socket.id);
+  //   });
+  });
+  // app.get('/',(req,res)=>{
+  //   res.send('Hello world');
+  // })
 
 
 server.listen(ServerConfig.PORT,async()=>{

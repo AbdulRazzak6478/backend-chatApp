@@ -2,14 +2,9 @@ const mongoose = require('mongoose');
 
 const privateChatSchema = new mongoose.Schema({
   messages : [
-        [
-            {
-                type:mongoose.Schema.Types.ObjectId,
-            },
-            {
-                type:mongoose.Schema.Types.ObjectId,
-            }
-        ]
+        {
+            type:mongoose.Schema.Types.ObjectId,
+        }
     ],
   users : [
         {
@@ -21,3 +16,13 @@ const privateChatSchema = new mongoose.Schema({
 const PrivateChat = mongoose.model('PrivateChat',privateChatSchema);
 
 module.exports = PrivateChat;
+// messages : [
+//     [
+//         {
+//             type:mongoose.Schema.Types.ObjectId,
+//         },
+//         {
+//             type:mongoose.Schema.Types.ObjectId,
+//         }
+//     ]
+// ],
