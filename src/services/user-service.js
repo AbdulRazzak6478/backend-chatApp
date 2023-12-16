@@ -82,8 +82,21 @@ async function getAllUsers()
         throw new AppError(`Not able to get the users , ${error?.message}`,error?.statusCode ? error.statusCode :StatusCodes.INTERNAL_SERVER_ERROR)
     }
 }
+async function getUser(id)
+{
+    try {
+        const user = await userRepository.get(id);
+        console.log('user : ',user);
+
+        return user;
+    } catch (error) {
+        console.log('user service get user  error :',error);
+        throw new AppError(`Not able to get the user , ${error?.message}`,error?.statusCode ? error.statusCode :StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+}
 module.exports = {
     signup,
     signIn,
     getAllUsers,
+    getUser,
 }

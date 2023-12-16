@@ -21,19 +21,19 @@ io.on('connection', (socket) => {
 
  
 
-    socket.on('joined',({chatUserId})=>{
+    socket.on('joined',({groupid})=>{
       // users[socket.id]=chatUserId;
       // console.log('users array : ',users);
-      console.log(chatUserId,' has joined');
-      socket.join(chatUserId);
-      socket.broadcast.emit('userJoined',{user:chatUserId,message:`${chatUserId} has joined`});
+      console.log(groupid,' has joined');
+      socket.join(groupid);
+      socket.broadcast.emit('userJoined',{user:groupid,message:`${groupid} has joined`});
     })
     socket.emit('welcome',{user:'Admin',message : 'welcome to the chat'});
 
     socket.on('user-message',(data)=>{
       console.log('chat message object from client : ',data);
-      socket.join(data.chatUserId);
-      io.to(data.chatUserId).emit('message-received',{...data});
+      socket.join(data.groupid);
+      io.to(data.groupid).emit('message-received',{...data});
       // socket.emit('message-received',data);
     })
     socket.on('client',(msg)=>{
