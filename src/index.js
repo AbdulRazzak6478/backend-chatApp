@@ -10,6 +10,9 @@ const apiRoutes = require('./routes');
 
 const users=[{}];
 
+
+  // client   ==== server
+
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({origin:true}));
@@ -18,21 +21,19 @@ app.use(cors());
 
 io.on('connection', (socket) => {
     console.log('a user connected',socket.id);
-
- 
-
     socket.on('joined',({groupid})=>{
       // users[socket.id]=chatUserId;
       // console.log('users array : ',users);
       console.log(groupid,' has joined');
       socket.join(groupid);
-      socket.broadcast.emit('userJoined',{user:groupid,message:`${groupid} has joined`});
+      socket.broadcast.emit('userJoined',{groupid,message:`${groupid} has joined`});
     })
     socket.emit('welcome',{user:'Admin',message : 'welcome to the chat'});
 
     socket.on('user-message',(data)=>{
       console.log('chat message object from client : ',data);
-      socket.join(data.groupid);
+      
+      socket.join(data.groupid); // create group
       io.to(data.groupid).emit('message-received',{...data});
       // socket.emit('message-received',data);
     })

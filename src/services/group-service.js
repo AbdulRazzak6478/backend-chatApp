@@ -29,7 +29,7 @@ async function createGroup (data){
         group.users.map(async(id,index)=>{
             const user = await userRepository.get(id);
             console.log('group user : ',user);
-            user.groups.push(id);
+            user.groups.push(group.id);
             await user.save();
         });
 
