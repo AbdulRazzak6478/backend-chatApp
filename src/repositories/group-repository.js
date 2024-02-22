@@ -13,6 +13,14 @@ class GroupRepository extends CrudRepository{
         });
         return group;
     }
+    async getGroupByIds(IdsArr)
+    {
+        const group = await Group.find({
+            _id:IdsArr,
+        });
+        console.log('group array :',group);
+        return group;
+    }
 }
 
 module.exports = GroupRepository;

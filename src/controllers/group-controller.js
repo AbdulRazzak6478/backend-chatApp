@@ -45,6 +45,21 @@ async function getGroups(req, res){
         return res.status(error?.statusCode ? error.statusCode :StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
     }
 }
+async function getGroupsByIds(req, res){
+    try {
+       
+        const idsArr = req.body.ids
+        console.log('group ids req :',req.body.ids);
+        console.log('group ids :',idsArr);
+        const response = await GroupService.getGroupsByIds(idsArr);
+        SuccessResponse.data = response;
+        return res.status(StatusCodes.OK).json(SuccessResponse);
+    } catch (error) {
+        console.log('group controller getGroups error : ',error);
+        ErrorResponse.data = error;
+        return res.status(error?.statusCode ? error.statusCode :StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
+    }
+}
 async function deleteGroup(req, res){
     try {
         const response = await GroupService.deleteGroup(req.params.id);
@@ -103,5 +118,6 @@ module.exports = {
     deleteGroup,
     updateGroup,
     chatMessage,
-    getAllGroupChats
+    getAllGroupChats,
+    getGroupsByIds
 }

@@ -51,6 +51,16 @@ async function getGroup(id){
         throw new AppError(`not able to get a group details , ${error?.message}`,error?.statusCode ? error.statusCode :StatusCodes.INTERNAL_SERVER_ERROR)
     }
 }
+async function getGroupsByIds(idsArr){
+    try {
+        const groups = await groupRepository.getGroupByIds(idsArr);
+        console.log('group details : ',groups);
+        return groups;
+    } catch (error) {
+        console.log('group service get group error :',error);
+        throw new AppError(`not able to get a group details , ${error?.message}`,error?.statusCode ? error.statusCode :StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+}
 async function getGroups(){
     try {
         const groups = await groupRepository.getAll();
@@ -89,5 +99,6 @@ module.exports = {
     getGroups,
     getGroup,
     deleteGroup,
-    updateGroup
+    updateGroup,
+    getGroupsByIds
 }
