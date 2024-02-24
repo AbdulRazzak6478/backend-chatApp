@@ -7,6 +7,7 @@ router.post('/',GroupController.createGroup);
 router.get('/',GroupController.getGroups)
 
 router.get('/:id',GroupController.getGroup);
+
 router.post('/ids',GroupController.getGroupsByIds);
 
 

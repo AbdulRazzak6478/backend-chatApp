@@ -22,8 +22,6 @@ app.use(cors());
 io.on('connection', (socket) => {
     console.log('a user connected',socket.id);
     socket.on('joined',({groupid})=>{
-      // users[socket.id]=chatUserId;
-      // console.log('users array : ',users);
       console.log(groupid,' has joined');
       socket.join(groupid);
       socket.broadcast.emit('userJoined',{groupid,message:`${groupid} has joined`});

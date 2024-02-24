@@ -10,9 +10,22 @@ const privateChatRepository = new PrivateChatRepository();
 async function createPrivateChat(data)
 {
     try {
+        const userNames = data.userNames;
+
+        const user1 = await userRepository.get(data.users[0]);
+        const user2 = await userRepository.get(data.users[1]);
+
        const chat = await privateChatRepository.create(data);
-       console.log('chat data : ',chat);
-       return chat
+       console.log('chat details : ',chat);
+
+       await user1.friends.push(chat.id);
+       await user2.friends.push(chat.id);
+
+       await user1.save();
+       await user2.save();
+
+       return chat;
+
     } catch (error) {
         console.log('privateChat service create chat error :',error);
         throw new AppError(`not able to create a message or chat  , ${error?.message}`,error?.statusCode ? error.statusCode :StatusCodes.INTERNAL_SERVER_ERROR)
