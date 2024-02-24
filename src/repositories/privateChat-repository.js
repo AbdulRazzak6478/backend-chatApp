@@ -6,13 +6,14 @@ class PrivateChatRepository extends CrudRepository{
     {
         super(PrivateChat);
     }
-    async getChatByChatId(chatId)
+    async getChatsByChatIds(chatIds)
     {
         const chats = await PrivateChat.find({
-            chatId:chatId,
+            _id:chatIds,
         });
+        console.log('all private chats  : ',chats);
         return chats;
-    }
+    }  
 }
 
 module.exports = PrivateChatRepository;

@@ -51,6 +51,16 @@ async function getPrivateChat(id){
         throw new AppError(`not able to get a privateChats details , ${error?.message}`,error?.statusCode ? error.statusCode :StatusCodes.INTERNAL_SERVER_ERROR)
     }
 }
+async function getChatsByChatIds(ids){
+    try {
+        const privateChats = await privateChatRepository.getChatsByChatIds(ids);
+        console.log('all privateChats details : ',privateChats);
+        return privateChats;
+    } catch (error) {
+        console.log('privateChats service get chat error :',error);
+        throw new AppError(`not able to get a privateChats details , ${error?.message}`,error?.statusCode ? error.statusCode :StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+}
 
 async function deletePrivateChat(id){
     try {
@@ -67,5 +77,6 @@ module.exports = {
     createPrivateChat,
     getPrivateChats,
     getPrivateChat,
-    deletePrivateChat
+    deletePrivateChat,
+    getChatsByChatIds
 }

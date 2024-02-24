@@ -37,6 +37,20 @@ async function getPrivateChat(req, res){
         return res.status(error?.statusCode ? error.statusCode :StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
     }
 }
+async function getChatsByChatIds(req, res){
+    // console.log('request : ',req);
+    try {
+        // const chatIds = req.body.ids.split(',');
+        console.log(' chats ids : ',req.body.ids);
+        const response = await PrivateChatService.getChatsByChatIds(req.body.ids);
+        SuccessResponse.data = response;
+        return res.status(StatusCodes.OK).json(SuccessResponse);
+    } catch (error) {
+        console.log('group controller get Private Chat error : ',error);
+        ErrorResponse.data = error;
+        return res.status(error?.statusCode ? error.statusCode :StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
+    }
+}
 async function deletePrivateChat(req, res){
     try {
         const response = await PrivateChatService.deletePrivateChat(req.params.id);
@@ -81,5 +95,6 @@ module.exports = {
     getPrivateChat,
     deletePrivateChat,
     chatMessage,
-    getAllPrivateChats
+    getAllPrivateChats,
+    getChatsByChatIds
 }

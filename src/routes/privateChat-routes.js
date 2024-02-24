@@ -8,6 +8,8 @@ router.get('/',PrivateChatController.getPrivateChats);
 
 router.get('/:id',PrivateChatController.getPrivateChat);
 
+router.post('/friends',PrivateChatController.getChatsByChatIds);
+
 router.post('/:id',PrivateChatController.chatMessage);
 
 router.get('/:id/chat',PrivateChatController.getAllPrivateChats);
