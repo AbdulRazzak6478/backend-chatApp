@@ -19,6 +19,7 @@ async function signup(req, res){
 async function signIn(req, res){
     try {
         const data = req.body;
+        console.log('user req obj :',req.body);
         const response = await UserService.signIn({
             email : req.body.email,
             password: req.body.password

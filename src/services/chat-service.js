@@ -36,6 +36,7 @@ async function createChatMessage(groupId,data)
         throw new AppError(`not able to create a message or chat  , ${error?.message}`,error?.statusCode ? error.statusCode :StatusCodes.INTERNAL_SERVER_ERROR)
     }
 }
+
 async function createPrivateChatMessage(chatId,data)
 {
     try {
@@ -56,7 +57,7 @@ async function createPrivateChatMessage(chatId,data)
         user.messages.push(message?.id);
         await user.save();
 
-        chat.messages.push([message?.id,user.id]);
+        chat.messages.push(message?.id);
         await chat.save();
 
         return message;

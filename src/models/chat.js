@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const chatSchema = new mongoose.Schema({
-  content : {
+  message : {
     type : String
   },
   userId : {
@@ -11,7 +11,7 @@ const chatSchema = new mongoose.Schema({
     type : String
   },
   chatId : {
-    type : String
+    type : mongoose.Schema.Types.ObjectId,
   }
 },{timestamps:true});
 
