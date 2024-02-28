@@ -40,16 +40,20 @@ io.on('connection', async (socket) => {
         chatId : data.chatId,
         userName : data.userName,
       }
+      data.createdAt = new Date();
       if(data.isGroup)
       {
         console.log('group chatting');
         
         const groupMessage = await ChatService.createChatMessage(dataPayload.chatId,dataPayload);
         console.log('chat message created in group : ',groupMessage);
+        // io.to(data.chatId).emit('message-received',{groupMessage});
       }else {
         console.log('end to end user chat, chatting');
+        const privateChat = await ChatService.createPrivateChatMessage(dataPayload.chatId,dataPayload);
+        console.log('chat message created in privateChat : ',privateChat);
       }
-
+      
       io.to(data.chatId).emit('message-received',{...data});
       // socket.emit('message-received',data);
     })
