@@ -13,6 +13,14 @@ class ChatRepository extends CrudRepository{
         });
         return chats;
     }
+    async getChatsByChatIds(msgIds)
+    {
+        const chats = await Chat.find({
+            _id:msgIds,
+        });
+        console.log('all group chats messages : ',chats);
+        return chats;
+    }
 }
 
 module.exports = ChatRepository;
